@@ -60,7 +60,7 @@ Output ONLY valid JSON matching the structure below.
     return system_message
 
 @dynamic_prompt
-def get_flashcards(request: ModelRequest) -> str:
+def get_quiz(request: ModelRequest) -> str:
     """Inject context into state messages for flashcards."""
     
     retrieved_docs = doc['item']
@@ -70,9 +70,9 @@ def get_flashcards(request: ModelRequest) -> str:
 
     system_message = (
         """
-. Convert the user's notes into a set of flashcards.
+. Convert the user's notes into a set of quizes.
 Output ONLY valid JSON matching the structure below.
-
+Use LaTeX  wrapped in $$ and double-escape backslashes (e.g., "\\frac" not "\frac")
 ### STRUCTURE:
 {
   "topic_title": "Topic Name",

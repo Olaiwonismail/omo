@@ -21,7 +21,7 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 
 def save_directory(directory_path: str):
-    """Create outlines for all documents in a directory"""
+   
     
     for filename in os.listdir(directory_path):
         if filename.endswith(('.pdf', '.txt', '.docx')):
@@ -51,7 +51,7 @@ def save_directory(directory_path: str):
 
 # # Create outlines for all files
 # all_outlines = outline_directory("./documents")
-def chunk_directory(directory_path: str):
+async def chunk_directory(directory_path: str):
     """Create outlines for all documents in a directory"""
     
     for filename in os.listdir(directory_path):
@@ -72,3 +72,24 @@ def chunk_directory(directory_path: str):
     return chunk_text
             
     
+async def load_directory(directory_path: str):
+    """Create outlines for all documents in a directory"""
+    
+    for filename in os.listdir(directory_path):
+        if filename.endswith(('.pdf', '.txt', '.docx')):
+            filepath = os.path.join(directory_path, filename)
+            
+            # Load document
+            if filename.endswith('.pdf'):
+                print(filename)
+                loader = PyMuPDFLoader(filepath)
+            else:
+                loader = TextLoader(filepath)
+            
+            docs = loader.load()
+            chunks = text_splitter.split_documents(docs)
+            document_ids = vector_store.add_documents(documents=chunks)
+            # chunk_text = "\n\n".join([chunk.page_content for chunk in chunks])
+    print(document_ids[:3])
+    return str(document_ids[:3])
+            

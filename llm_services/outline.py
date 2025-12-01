@@ -9,8 +9,8 @@ from pydantic import BaseModel, Field
 
 from loaders.multiple_file import chunk_directory
 agent = create_agent(model, tools=[submit_outline], middleware=[prompt_with_context])
-def create_outline():
-    chunk_text = chunk_directory("./documents")
+async def create_outline():
+    chunk_text =await chunk_directory("./documents")
     print('chunk_text')
     agent = create_agent(model, tools=[submit_outline], middleware=[prompt_with_context])
 
